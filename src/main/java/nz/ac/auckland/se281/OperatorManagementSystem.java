@@ -6,7 +6,9 @@ public class OperatorManagementSystem {
   public OperatorManagementSystem() {}
 
   public void searchOperators(String keyword) {
-    // TODO implement
+    if (keyword.equals("*")) {
+      MessageCli.OPERATORS_FOUND.printMessage("are", "no", "s", ".");
+    }
   }
 
   public void createOperator(String operatorName, String location) {
