@@ -12,7 +12,12 @@ public class OperatorManagementSystem {
   }
 
   public void createOperator(String operatorName, String location) {
-    MessageCli.OPERATOR_CREATED.printMessage(operatorName);
+
+    //
+    Types.Location locationEnum = Types.Location.fromString(location);
+    String locationFullName = locationEnum.getFullName();
+
+    MessageCli.OPERATOR_CREATED.printMessage(operatorName, "", locationFullName);
   }
 
   public void viewActivities(String operatorId) {
