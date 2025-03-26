@@ -13,11 +13,21 @@ public class OperatorManagementSystem {
 
   public void createOperator(String operatorName, String location) {
 
-    //
+    // Converts location to the Location enum constant
     Types.Location locationEnum = Types.Location.fromString(location);
     String locationFullName = locationEnum.getFullName();
 
-    MessageCli.OPERATOR_CREATED.printMessage(operatorName, "", locationFullName);
+    // Stripping operator name of white space and storing each word
+    String clearedWhiteSpaceOperatorName = operatorName.trim();
+    String[] operatorNameParts = clearedWhiteSpaceOperatorName.split(" ");
+
+    // Loops through each word of the operator name and takes the first initial to make operator id
+    String operatorInitials = "";
+    for (String operatorNamePart : operatorNameParts) {
+      operatorInitials = operatorInitials + operatorNamePart.charAt(0);
+    }
+
+    MessageCli.OPERATOR_CREATED.printMessage(operatorName, operatorInitials, locationFullName);
   }
 
   public void viewActivities(String operatorId) {
