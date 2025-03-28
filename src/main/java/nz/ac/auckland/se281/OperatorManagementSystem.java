@@ -1,15 +1,25 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
+
 public class OperatorManagementSystem {
 
   private int operatorCount = 0;
+  private ArrayList<String> operatorList = new ArrayList<>();
 
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {}
 
   public void searchOperators(String keyword) {
-    if (keyword.equals("*")) {
+
+    // Prints message when searching for all operators
+    if (keyword.equals("*") && operatorCount == 0) {
       MessageCli.OPERATORS_FOUND.printMessage("are", "no", "s", ".");
+    } else if (keyword.equals("*") && operatorCount == 1) {
+      MessageCli.OPERATORS_FOUND.printMessage("is", "" + operatorCount, "", ":");
+      for (String operator : operatorList) {
+        System.out.println(operator);
+      }
     }
   }
 
@@ -49,6 +59,20 @@ public class OperatorManagementSystem {
           operatorInitials + "-" + locationAbbreviation + "-" + operatorCount,
           locationFullName);
     }
+
+    // adds operator to ArrayList for tracking
+    operatorList.add(
+        "* "
+            + operatorName
+            + " ('"
+            + operatorInitials
+            + "-"
+            + locationAbbreviation
+            + "-00"
+            + operatorCount
+            + "' located in '"
+            + locationFullName
+            + "')");
   }
 
   public void viewActivities(String operatorId) {
