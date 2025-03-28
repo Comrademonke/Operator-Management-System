@@ -40,36 +40,30 @@ public class OperatorManagementSystem {
       operatorInitials = operatorInitials + operatorNamePart.charAt(0);
     }
 
-    // Prints operator count format based off number of existing operators
     operatorCount++;
 
+    // Concatenates the ID part of the operator name
+    String operatorCountString = Integer.toString(operatorCount);
+    StringBuilder operatorCountId =
+        new StringBuilder(operatorInitials + "-" + locationAbbreviation + "-");
+
+    // Prints operator count format based off number of existing operators
     if (operatorCount < 10) {
-      MessageCli.OPERATOR_CREATED.printMessage(
-          operatorName,
-          operatorInitials + "-" + locationAbbreviation + "-00" + operatorCount,
-          locationFullName);
+      operatorCountId.append("00");
     } else if (operatorCount > 10 && operatorCount < 99) {
-      MessageCli.OPERATOR_CREATED.printMessage(
-          operatorName,
-          operatorInitials + "-" + locationAbbreviation + "-0" + operatorCount,
-          locationFullName);
-    } else {
-      MessageCli.OPERATOR_CREATED.printMessage(
-          operatorName,
-          operatorInitials + "-" + locationAbbreviation + "-" + operatorCount,
-          locationFullName);
+      operatorCountId.append("0");
     }
+    operatorCountId.append(operatorCountString);
+
+    MessageCli.OPERATOR_CREATED.printMessage(
+        operatorName, operatorCountId.toString(), locationFullName);
 
     // adds operator to ArrayList for tracking
     operatorList.add(
         "* "
             + operatorName
             + " ('"
-            + operatorInitials
-            + "-"
-            + locationAbbreviation
-            + "-00"
-            + operatorCount
+            + operatorCountId.toString()
             + "' located in '"
             + locationFullName
             + "')");
