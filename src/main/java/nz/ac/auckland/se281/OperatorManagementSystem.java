@@ -2,6 +2,8 @@ package nz.ac.auckland.se281;
 
 public class OperatorManagementSystem {
 
+  private int operatorCount = 0;
+
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {}
 
@@ -28,14 +30,25 @@ public class OperatorManagementSystem {
       operatorInitials = operatorInitials + operatorNamePart.charAt(0);
     }
 
-    // Tracks how many operators exist
-    int operatorCount = 0;
+    // Prints operator count format based off number of existing operators
     operatorCount++;
 
-    MessageCli.OPERATOR_CREATED.printMessage(
-        operatorName,
-        operatorInitials + "-" + locationAbbreviation + "-00" + operatorCount,
-        locationFullName);
+    if (operatorCount < 10) {
+      MessageCli.OPERATOR_CREATED.printMessage(
+          operatorName,
+          operatorInitials + "-" + locationAbbreviation + "-00" + operatorCount,
+          locationFullName);
+    } else if (operatorCount > 10 && operatorCount < 99) {
+      MessageCli.OPERATOR_CREATED.printMessage(
+          operatorName,
+          operatorInitials + "-" + locationAbbreviation + "-0" + operatorCount,
+          locationFullName);
+    } else {
+      MessageCli.OPERATOR_CREATED.printMessage(
+          operatorName,
+          operatorInitials + "-" + locationAbbreviation + "-" + operatorCount,
+          locationFullName);
+    }
   }
 
   public void viewActivities(String operatorId) {
