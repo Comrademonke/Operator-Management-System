@@ -16,6 +16,7 @@ public class OperatorManagementSystem {
     // Converts location to the Location enum constant
     Types.Location locationEnum = Types.Location.fromString(location);
     String locationFullName = locationEnum.getFullName();
+    String locationAbbreviation = locationEnum.getLocationAbbreviation();
 
     // Stripping operator name of white space and storing each word
     String clearedWhiteSpaceOperatorName = operatorName.trim();
@@ -27,7 +28,14 @@ public class OperatorManagementSystem {
       operatorInitials = operatorInitials + operatorNamePart.charAt(0);
     }
 
-    MessageCli.OPERATOR_CREATED.printMessage(operatorName, operatorInitials, locationFullName);
+    // Tracks how many operators exist
+    int operatorCount = 0;
+    operatorCount++;
+
+    MessageCli.OPERATOR_CREATED.printMessage(
+        operatorName,
+        operatorInitials + "-" + locationAbbreviation + "-00" + operatorCount,
+        locationFullName);
   }
 
   public void viewActivities(String operatorId) {
