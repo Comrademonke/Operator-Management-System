@@ -34,39 +34,53 @@ public class OperatorManagementSystem {
     String clearedWhiteSpaceOperatorName = operatorName.trim();
     String[] operatorNameParts = clearedWhiteSpaceOperatorName.split(" ");
 
-    // Loops through each word of the operator name and takes the first initial to make operator id
-    String operatorInitials = "";
-    for (String operatorNamePart : operatorNameParts) {
-      operatorInitials = operatorInitials + operatorNamePart.charAt(0);
+    // Checks for existing operators
+    boolean existingOperator = false;
+    for (String operator : operatorList) {
+      if (operator.contains(operatorName) && operator.contains(location)) {
+        existingOperator = true;
+      }
     }
 
-    operatorCount++;
+    if (existingOperator) {
+      MessageCli.OPERATOR_NOT_CREATED_ALREADY_EXISTS_SAME_LOCATION.printMessage(
+          operatorName, locationFullName);
+    } else {
+      // Loops through each word of the operator name and takes the first initial to make operator
+      // id
+      String operatorInitials = "";
+      for (String operatorNamePart : operatorNameParts) {
+        operatorInitials = operatorInitials + operatorNamePart.charAt(0);
+      }
 
-    // Concatenates the ID part of the operator name
-    String operatorCountString = Integer.toString(operatorCount);
-    StringBuilder operatorCountId =
-        new StringBuilder(operatorInitials + "-" + locationAbbreviation + "-");
+      operatorCount++;
 
-    // Prints operator count format based off number of existing operators
-    if (operatorCount < 10) {
-      operatorCountId.append("00");
-    } else if (operatorCount > 10 && operatorCount < 99) {
-      operatorCountId.append("0");
+      // Concatenates the ID part of the operator name
+      String operatorCountString = Integer.toString(operatorCount);
+      StringBuilder operatorCountId =
+          new StringBuilder(operatorInitials + "-" + locationAbbreviation + "-");
+
+      // Prints operator count format based off number of existing operators
+      if (operatorCount < 10) {
+        operatorCountId.append("00");
+      } else if (operatorCount > 10 && operatorCount < 99) {
+        operatorCountId.append("0");
+      }
+      operatorCountId.append(operatorCountString);
+
+      MessageCli.OPERATOR_CREATED.printMessage(
+          operatorName, operatorCountId.toString(), locationFullName);
+
+      // adds operator to ArrayList for tracking
+      operatorList.add(
+          "* "
+              + operatorName
+              + " ('"
+              + operatorCountId.toString()
+              + "' located in '"
+              + locationFullName
+              + "')");
     }
-    operatorCountId.append(operatorCountString);
-
-    MessageCli.OPERATOR_CREATED.printMessage(
-        operatorName, operatorCountId.toString(), locationFullName);
-
-    // adds operator to ArrayList for tracking
-    operatorList.add(
-        "* "
-            + operatorName
-            + " ('"
-            + operatorCountId.toString()
-            + "' located in '"
-            + locationFullName
-            + "')");
   }
 
   public void viewActivities(String operatorId) {
