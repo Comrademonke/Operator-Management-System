@@ -28,6 +28,26 @@ public class OperatorManagementSystem {
         System.out.println(operator);
       }
     }
+
+    // Searching for existing operators with keywords
+    int operatorsFound = 0;
+    ArrayList<String> matchingOperatorList = new ArrayList<>();
+    for (String operatorName : operatorList) {
+      if (operatorName.contains(keyword)) {
+        operatorsFound++;
+        matchingOperatorList.add(operatorName);
+      }
+    }
+
+    // Prints how many operators are matching and the list of matching operators
+    if (operatorsFound == 1) {
+      MessageCli.OPERATORS_FOUND.printMessage("is", Integer.toString(operatorsFound), "", ":");
+    } else if (operatorsFound > 1) {
+      MessageCli.OPERATORS_FOUND.printMessage("are", Integer.toString(operatorsFound), "s", ":");
+    }
+    for (String operatorMatch : matchingOperatorList) {
+      System.out.println(operatorMatch);
+    }
   }
 
   public void createOperator(String operatorName, String location) {
