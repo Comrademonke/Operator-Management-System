@@ -14,26 +14,26 @@ public class OperatorManagementSystem {
   public void searchOperators(String keyword) {
 
     // Prints message based off total operator count when searching for all operators
-    if (keyword.equals("*") && totalOperatorCount == 0) {
+    if (keyword.trim().equals("*") && totalOperatorCount == 0) {
       MessageCli.OPERATORS_FOUND.printMessage("are", "no", "s", ".");
-    } else if (keyword.equals("*") && totalOperatorCount == 1) {
+    } else if (keyword.trim().equals("*") && totalOperatorCount == 1) {
       MessageCli.OPERATORS_FOUND.printMessage("is", Integer.toString(totalOperatorCount), "", ":");
       for (String operator : operatorList) {
         System.out.println(operator);
       }
-    } else if (keyword.equals("*") && totalOperatorCount > 1) {
+    } else if (keyword.trim().equals("*") && totalOperatorCount > 1) {
       MessageCli.OPERATORS_FOUND.printMessage(
           "are", Integer.toString(totalOperatorCount), "s", ":");
       for (String operator : operatorList) {
         System.out.println(operator);
       }
-    } else if (!keyword.equals("*")) {
+    } else if (!keyword.trim().equals("*")) {
 
       // Searching for existing operators with keywords
       int operatorsFound = 0;
       ArrayList<String> matchingOperatorList = new ArrayList<>();
       for (String operatorName : operatorList) {
-        if (operatorName.contains(keyword)) {
+        if (operatorName.toLowerCase().contains(keyword.trim().toLowerCase())) {
           operatorsFound++;
           matchingOperatorList.add(operatorName);
         }
