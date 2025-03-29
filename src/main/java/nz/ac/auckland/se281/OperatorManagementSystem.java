@@ -27,26 +27,27 @@ public class OperatorManagementSystem {
       for (String operator : operatorList) {
         System.out.println(operator);
       }
-    }
+    } else if (!keyword.equals("*")) {
 
-    // Searching for existing operators with keywords
-    int operatorsFound = 0;
-    ArrayList<String> matchingOperatorList = new ArrayList<>();
-    for (String operatorName : operatorList) {
-      if (operatorName.contains(keyword)) {
-        operatorsFound++;
-        matchingOperatorList.add(operatorName);
+      // Searching for existing operators with keywords
+      int operatorsFound = 0;
+      ArrayList<String> matchingOperatorList = new ArrayList<>();
+      for (String operatorName : operatorList) {
+        if (operatorName.contains(keyword)) {
+          operatorsFound++;
+          matchingOperatorList.add(operatorName);
+        }
       }
-    }
 
-    // Prints how many operators are matching and the list of matching operators
-    if (operatorsFound == 1) {
-      MessageCli.OPERATORS_FOUND.printMessage("is", Integer.toString(operatorsFound), "", ":");
-    } else if (operatorsFound > 1) {
-      MessageCli.OPERATORS_FOUND.printMessage("are", Integer.toString(operatorsFound), "s", ":");
-    }
-    for (String operatorMatch : matchingOperatorList) {
-      System.out.println(operatorMatch);
+      // Prints number of matching operators and the list of matching operators
+      if (operatorsFound == 1) {
+        MessageCli.OPERATORS_FOUND.printMessage("is", Integer.toString(operatorsFound), "", ":");
+      } else if (operatorsFound > 1) {
+        MessageCli.OPERATORS_FOUND.printMessage("are", Integer.toString(operatorsFound), "s", ":");
+      }
+      for (String operatorMatch : matchingOperatorList) {
+        System.out.println(operatorMatch);
+      }
     }
   }
 
