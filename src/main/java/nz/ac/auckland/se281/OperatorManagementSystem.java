@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class OperatorManagementSystem {
 
   private int operatorCount = 0;
+  private int totalOperatorCount = 0;
   private ArrayList<String> operatorList = new ArrayList<>();
 
   // Do not change the parameters of the constructor
@@ -53,7 +54,14 @@ public class OperatorManagementSystem {
         operatorInitials = operatorInitials + operatorNamePart.charAt(0);
       }
 
-      operatorCount++;
+      // Loops through operatorsList and counts operators that exist in the same location
+      operatorCount = 1;
+      for (String operatorLocation : operatorList) {
+        if (operatorLocation.contains(location)) {
+          operatorCount++;
+        }
+      }
+      totalOperatorCount++;
 
       // Concatenates the ID part of the operator name
       String operatorCountString = Integer.toString(operatorCount);
