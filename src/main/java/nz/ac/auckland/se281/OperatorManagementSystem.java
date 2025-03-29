@@ -13,11 +13,17 @@ public class OperatorManagementSystem {
 
   public void searchOperators(String keyword) {
 
-    // Prints message when searching for all operators
-    if (keyword.equals("*") && operatorCount == 0) {
+    // Prints message based off total operator count when searching for all operators
+    if (keyword.equals("*") && totalOperatorCount == 0) {
       MessageCli.OPERATORS_FOUND.printMessage("are", "no", "s", ".");
-    } else if (keyword.equals("*") && operatorCount == 1) {
-      MessageCli.OPERATORS_FOUND.printMessage("is", "" + operatorCount, "", ":");
+    } else if (keyword.equals("*") && totalOperatorCount == 1) {
+      MessageCli.OPERATORS_FOUND.printMessage("is", Integer.toString(totalOperatorCount), "", ":");
+      for (String operator : operatorList) {
+        System.out.println(operator);
+      }
+    } else if (keyword.equals("*") && totalOperatorCount > 1) {
+      MessageCli.OPERATORS_FOUND.printMessage(
+          "are", Integer.toString(totalOperatorCount), "s", ":");
       for (String operator : operatorList) {
         System.out.println(operator);
       }
