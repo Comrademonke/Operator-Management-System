@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 public class OperatorManagementSystem {
 
-  private int operatorCount = 0;
   private int totalOperatorCount = 0;
   private ArrayList<String> operatorList = new ArrayList<>();
+  private ArrayList<String> operatorLocationList = new ArrayList<>();
+  private ArrayList<String> operatorNameList = new ArrayList<>();
 
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {}
@@ -66,9 +67,11 @@ public class OperatorManagementSystem {
 
     // Checks for existing operators
     boolean existingOperator = false;
-    for (String operator : operatorList) {
-      if (operator.contains(operatorName) && operator.contains(location)) {
+    for (int operator = 0; operator < operatorList.size(); operator++) {
+      if (operatorNameList.get(operator).equalsIgnoreCase(operatorName.trim())
+          && operatorLocationList.get(operator).equalsIgnoreCase(locationAbbreviation)) {
         existingOperator = true;
+        break;
       }
     }
 
@@ -80,13 +83,13 @@ public class OperatorManagementSystem {
       // id
       String operatorInitials = "";
       for (String operatorNamePart : operatorNameParts) {
-        operatorInitials = operatorInitials + operatorNamePart.charAt(0);
+        operatorInitials = operatorInitials + operatorNamePart.toUpperCase().charAt(0);
       }
 
       // Loops through operatorsList and counts operators that exist in the same location
-      operatorCount = 1;
-      for (String operatorLocation : operatorList) {
-        if (operatorLocation.contains(location)) {
+      int operatorCount = 1;
+      for (String operatorLocation : operatorLocationList) {
+        if (operatorLocation.contains(locationAbbreviation)) {
           operatorCount++;
         }
       }
@@ -110,13 +113,10 @@ public class OperatorManagementSystem {
 
       // adds operator to ArrayList for tracking
       operatorList.add(
-          "* "
-              + operatorName
-              + " ('"
-              + operatorCountId.toString()
-              + "' located in '"
-              + locationFullName
-              + "')");
+          MessageCli.OPERATOR_ENTRY.getMessage(
+              operatorName, operatorCountId.toString(), locationFullName));
+      operatorLocationList.add(locationAbbreviation);
+      operatorNameList.add(operatorName);
     }
   }
 
