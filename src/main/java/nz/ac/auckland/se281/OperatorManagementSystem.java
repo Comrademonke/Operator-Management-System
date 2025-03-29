@@ -44,6 +44,8 @@ public class OperatorManagementSystem {
         MessageCli.OPERATORS_FOUND.printMessage("is", Integer.toString(operatorsFound), "", ":");
       } else if (operatorsFound > 1) {
         MessageCli.OPERATORS_FOUND.printMessage("are", Integer.toString(operatorsFound), "s", ":");
+      } else if (operatorsFound == 0) {
+        MessageCli.OPERATORS_FOUND.printMessage("are", "no", "s", ".");
       }
       for (String operatorMatch : matchingOperatorList) {
         System.out.println(operatorMatch);
