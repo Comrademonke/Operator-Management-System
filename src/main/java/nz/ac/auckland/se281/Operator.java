@@ -23,6 +23,7 @@ public class Operator {
     return location;
   }
 
+  @Override
   public String toString() {
     return MessageCli.OPERATOR_ENTRY.getMessage(operatorName, id, location.getFullName());
   }
