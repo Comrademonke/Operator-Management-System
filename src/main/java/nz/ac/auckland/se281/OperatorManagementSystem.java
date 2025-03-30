@@ -5,9 +5,7 @@ import java.util.ArrayList;
 public class OperatorManagementSystem {
 
   private int totalOperatorCount = 0;
-  private ArrayList<String> operatorList = new ArrayList<>();
-  private ArrayList<String> operatorLocationList = new ArrayList<>();
-  private ArrayList<String> operatorNameList = new ArrayList<>();
+  private ArrayList<Operator> operatorList = new ArrayList<>();
 
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {}
@@ -21,24 +19,30 @@ public class OperatorManagementSystem {
       MessageCli.OPERATORS_FOUND.printMessage("are", "no", "s", ".");
     } else if (trimAndLowerCaseKeyword.equals("*") && totalOperatorCount == 1) {
       MessageCli.OPERATORS_FOUND.printMessage("is", Integer.toString(totalOperatorCount), "", ":");
-      for (String operator : operatorList) {
+      for (Operator operator : operatorList) {
         System.out.println(operator);
       }
     } else if (trimAndLowerCaseKeyword.equals("*") && totalOperatorCount > 1) {
       MessageCli.OPERATORS_FOUND.printMessage(
           "are", Integer.toString(totalOperatorCount), "s", ":");
-      for (String operator : operatorList) {
+      for (Operator operator : operatorList) {
         System.out.println(operator);
       }
     } else if (!trimAndLowerCaseKeyword.equals("*")) {
 
-      // Searching for existing operators with keywords
+      // Searching for existing operators with keywords and adds them to operator arraylist
       int operatorsFound = 0;
-      ArrayList<String> matchingOperatorList = new ArrayList<>();
-      for (String operatorName : operatorList) {
-        if (operatorName.toLowerCase().contains(trimAndLowerCaseKeyword)) {
+      ArrayList<Operator> matchingOperatorList = new ArrayList<>();
+      for (Operator operator : operatorList) {
+        if (operator.getName().toLowerCase().contains(trimAndLowerCaseKeyword)
+            || operator.getId().toLowerCase().contains(trimAndLowerCaseKeyword)
+            || operator
+                .getLocation()
+                .getFullName()
+                .toLowerCase()
+                .contains(trimAndLowerCaseKeyword)) {
           operatorsFound++;
-          matchingOperatorList.add(operatorName);
+          matchingOperatorList.add(operator);
         }
       }
 
@@ -50,8 +54,8 @@ public class OperatorManagementSystem {
       } else if (operatorsFound == 0) {
         MessageCli.OPERATORS_FOUND.printMessage("are", "no", "s", ".");
       }
-      for (String operatorMatch : matchingOperatorList) {
-        System.out.println(operatorMatch);
+      for (Operator operator : matchingOperatorList) {
+        System.out.println(operator.toString());
       }
     }
   }
@@ -82,11 +86,11 @@ public class OperatorManagementSystem {
     String locationAbbreviation = locationEnum.getLocationAbbreviation();
 
     // Checks for existing operators
-    for (int operator = 0; operator < operatorList.size(); operator++) {
-      if (operatorNameList.get(operator).equalsIgnoreCase(trimOperatorName)
-          && operatorLocationList.get(operator).equalsIgnoreCase(locationAbbreviation)) {
+    for (Operator operator : operatorList) {
+      if (operator.getName().equalsIgnoreCase(trimOperatorName)
+          && operator.getLocation() == locationEnum) {
         MessageCli.OPERATOR_NOT_CREATED_ALREADY_EXISTS_SAME_LOCATION.printMessage(
-            operatorName, locationFullName);
+            trimOperatorName, locationFullName);
         return;
       }
     }
@@ -100,8 +104,8 @@ public class OperatorManagementSystem {
 
     // Loops through operatorsList and counts operators that exist in the same location
     int operatorCount = 1;
-    for (String operatorLocation : operatorLocationList) {
-      if (operatorLocation.contains(locationAbbreviation)) {
+    for (Operator operatorLocation : operatorList) {
+      if (operatorLocation.getLocation() == locationEnum) {
         operatorCount++;
       }
     }
@@ -121,14 +125,10 @@ public class OperatorManagementSystem {
     operatorCountId.append(operatorCountString);
 
     MessageCli.OPERATOR_CREATED.printMessage(
-        operatorName, operatorCountId.toString(), locationFullName);
+        trimOperatorName, operatorCountId.toString(), locationFullName);
 
     // adds operator to ArrayList for tracking
-    operatorList.add(
-        MessageCli.OPERATOR_ENTRY.getMessage(
-            operatorName, operatorCountId.toString(), locationFullName));
-    operatorLocationList.add(locationAbbreviation);
-    operatorNameList.add(operatorName);
+    operatorList.add(new Operator(trimOperatorName, operatorCountId.toString(), locationEnum));
   }
 
   public void viewActivities(String operatorId) {
