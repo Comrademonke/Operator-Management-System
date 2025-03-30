@@ -103,7 +103,7 @@ public class OperatorManagementSystem {
       // Prints operator count format based off number of existing operators
       if (operatorCount < 10) {
         operatorCountId.append("00");
-      } else if (operatorCount > 10 && operatorCount < 99) {
+      } else if (operatorCount >= 10 && operatorCount < 99) {
         operatorCountId.append("0");
       }
       operatorCountId.append(operatorCountString);
