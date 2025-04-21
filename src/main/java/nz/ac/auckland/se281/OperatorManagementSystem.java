@@ -132,7 +132,20 @@ public class OperatorManagementSystem {
   }
 
   public void viewActivities(String operatorId) {
-    // TODO implement
+    // Checks if operatorId is valid with an operator
+    if (getOperatorName(operatorId) == null) {
+      MessageCli.OPERATOR_NOT_FOUND.printMessage(operatorId);
+      return;
+    }
+  }
+
+  public String getOperatorName(String operatorId) {
+    for (Operator operator : operatorList) {
+      if (operator.getId().contains(operatorId)) {
+        return operator.getName();
+      }
+    }
+    return null;
   }
 
   public void createActivity(String activityName, String activityType, String operatorId) {
