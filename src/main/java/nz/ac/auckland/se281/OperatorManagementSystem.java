@@ -160,6 +160,12 @@ public class OperatorManagementSystem {
     if (activityName.trim().length() < 3) {
       MessageCli.ACTIVITY_NOT_CREATED_INVALID_ACTIVITY_NAME.printMessage(activityName);
     }
+
+    // Checks if operatorId is valid with an operator
+    if (getOperatorName(operatorId) == null) {
+      MessageCli.ACTIVITY_NOT_CREATED_INVALID_OPERATOR_ID.printMessage(operatorId);
+      return;
+    }
   }
 
   public void searchActivities(String keyword) {
