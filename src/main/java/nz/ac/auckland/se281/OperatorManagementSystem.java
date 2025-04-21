@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class OperatorManagementSystem {
 
   private int totalOperatorCount = 0;
+  private int totalActivityCount = 0;
   private ArrayList<Operator> operatorList = new ArrayList<>();
 
   // Do not change the parameters of the constructor
@@ -132,6 +133,12 @@ public class OperatorManagementSystem {
   }
 
   public void viewActivities(String operatorId) {
+    // Check for any existing activities
+    if (getOperatorName(operatorId) != null && totalActivityCount == 0) {
+      MessageCli.ACTIVITIES_FOUND.printMessage("are", "no", "ies", ".");
+      return;
+    }
+
     // Checks if operatorId is valid with an operator
     if (getOperatorName(operatorId) == null) {
       MessageCli.OPERATOR_NOT_FOUND.printMessage(operatorId);
