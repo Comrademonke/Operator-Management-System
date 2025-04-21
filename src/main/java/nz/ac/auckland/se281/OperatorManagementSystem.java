@@ -7,6 +7,7 @@ public class OperatorManagementSystem {
   private int totalOperatorCount = 0;
   private int totalActivityCount = 0;
   private ArrayList<Operator> operatorList = new ArrayList<>();
+  private ArrayList<Activity> activityList = new ArrayList<>();
 
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {}
@@ -133,16 +134,34 @@ public class OperatorManagementSystem {
   }
 
   public void viewActivities(String operatorId) {
-    // Check for any existing activities
-    if (getOperatorName(operatorId) != null && totalActivityCount == 0) {
-      MessageCli.ACTIVITIES_FOUND.printMessage("are", "no", "ies", ".");
-      return;
-    }
-
     // Checks if operatorId is valid with an operator
     if (getOperatorName(operatorId) == null) {
       MessageCli.OPERATOR_NOT_FOUND.printMessage(operatorId);
       return;
+    }
+
+    // Checks for number of matching activities
+    int activityFound = 0;
+    for (Activity activity : activityList) {
+      if (activity.getOperatorId().equals(operatorId)) {
+        activityFound++;
+      }
+    }
+
+    // Prints number of matching activities found
+    if (getOperatorName(operatorId) != null && activityFound == 0) {
+      MessageCli.ACTIVITIES_FOUND.printMessage("are", "no", "ies", ".");
+      return;
+    } else if (activityFound == 1) {
+      MessageCli.ACTIVITIES_FOUND.printMessage("is", activityFound + "", "y", ":");
+    } else {
+      MessageCli.ACTIVITIES_FOUND.printMessage("are", activityFound + "", "ies", ":");
+    }
+
+    for (Activity activity : activityList) {
+      if (activity.getOperatorId().equals(operatorId)) {
+        System.out.println(activity + getOperatorName(operatorId));
+      }
     }
   }
 
@@ -169,7 +188,14 @@ public class OperatorManagementSystem {
     }
 
     Types.ActivityType activityTypeEnum = Types.ActivityType.fromString(activityType);
+
+    // Checks the activity count for an operator
     int activityCount = 1;
+    for (Activity activity : activityList) {
+      if (activity.getOperatorId().equals(operatorId)) {
+        activityCount++;
+      }
+    }
 
     // Formats the activity count
     String activityCountFormat = "";
@@ -184,6 +210,11 @@ public class OperatorManagementSystem {
         operatorId + activityCountFormat + activityCount,
         activityTypeEnum.getName(),
         getOperatorName(operatorId));
+
+    activityList.add(
+        new Activity(
+            activityName, activityTypeEnum, operatorId, activityCountFormat + activityCount));
+    totalActivityCount++;
   }
 
   public void searchActivities(String keyword) {
