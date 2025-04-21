@@ -171,9 +171,17 @@ public class OperatorManagementSystem {
     Types.ActivityType activityTypeEnum = Types.ActivityType.fromString(activityType);
     int activityCount = 1;
 
+    // Formats the activity count
+    String activityCountFormat = "";
+    if (activityCount < 10) {
+      activityCountFormat = "-00";
+    } else if (activityCount > 10 && activityCount < 100) {
+      activityCountFormat = "-0";
+    }
+
     MessageCli.ACTIVITY_CREATED.printMessage(
         activityName.trim(),
-        operatorId + "-00" + activityCount,
+        operatorId + activityCountFormat + activityCount,
         activityTypeEnum.getName(),
         getOperatorName(operatorId));
   }
