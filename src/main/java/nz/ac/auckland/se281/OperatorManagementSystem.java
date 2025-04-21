@@ -159,6 +159,7 @@ public class OperatorManagementSystem {
     // Checks for invalid activity name
     if (activityName.trim().length() < 3) {
       MessageCli.ACTIVITY_NOT_CREATED_INVALID_ACTIVITY_NAME.printMessage(activityName);
+      return;
     }
 
     // Checks if operatorId is valid with an operator
@@ -166,6 +167,15 @@ public class OperatorManagementSystem {
       MessageCli.ACTIVITY_NOT_CREATED_INVALID_OPERATOR_ID.printMessage(operatorId);
       return;
     }
+
+    Types.ActivityType activityTypeEnum = Types.ActivityType.fromString(activityType);
+    int activityCount = 1;
+
+    MessageCli.ACTIVITY_CREATED.printMessage(
+        activityName.trim(),
+        operatorId + "-00" + activityCount,
+        activityTypeEnum.getName(),
+        getOperatorName(operatorId));
   }
 
   public void searchActivities(String keyword) {
