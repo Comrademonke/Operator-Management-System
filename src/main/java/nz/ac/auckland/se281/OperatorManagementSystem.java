@@ -165,7 +165,7 @@ public class OperatorManagementSystem {
     }
   }
 
-  public String getOperatorName(String operatorId) {
+  private String getOperatorName(String operatorId) {
     for (Operator operator : operatorList) {
       if (operator.getId().contains(operatorId)) {
         return operator.getName();
@@ -218,7 +218,12 @@ public class OperatorManagementSystem {
   }
 
   public void searchActivities(String keyword) {
-    // TODO implement
+    String trimAndLowerCaseKeyword = keyword.trim().toLowerCase();
+
+    // Prints message when searching for all activities
+    if (trimAndLowerCaseKeyword.equals("*") && totalActivityCount == 0) {
+      MessageCli.ACTIVITIES_FOUND.printMessage("are", "no", "ies", ".");
+    }
   }
 
   public void addPublicReview(String activityId, String[] options) {
