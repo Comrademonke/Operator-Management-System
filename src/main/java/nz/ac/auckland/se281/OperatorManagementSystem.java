@@ -302,11 +302,27 @@ public class OperatorManagementSystem {
   }
 
   public void addPrivateReview(String activityId, String[] options) {
-    // TODO implement
+    // Checks for invalid activityId
+    if (getActivityName(activityId) == null) {
+      MessageCli.REVIEW_NOT_ADDED_INVALID_ACTIVITY_ID.printMessage(activityId);
+      return;
+    }
+
+    int reviewNumber = 1;
+    MessageCli.REVIEW_ADDED.printMessage(
+        "Private", activityId + "-R" + reviewNumber, getActivityName(activityId));
   }
 
   public void addExpertReview(String activityId, String[] options) {
-    // TODO implement
+    // Checks for invalid activityId
+    if (getActivityName(activityId) == null) {
+      MessageCli.REVIEW_NOT_ADDED_INVALID_ACTIVITY_ID.printMessage(activityId);
+      return;
+    }
+
+    int reviewNumber = 1;
+    MessageCli.REVIEW_ADDED.printMessage(
+        "Expert", activityId + "-R" + reviewNumber, getActivityName(activityId));
   }
 
   public void displayReviews(String activityId) {
