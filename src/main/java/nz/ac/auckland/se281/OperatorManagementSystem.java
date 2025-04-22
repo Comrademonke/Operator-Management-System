@@ -307,7 +307,9 @@ public class OperatorManagementSystem {
       options[2] = "5";
     }
 
-    int reviewNumber = getReviewNumber(activityId);
+    int reviewNumber = 1;
+    reviewNumber = getReviewNumber(activityId, reviewNumber);
+
     MessageCli.REVIEW_ADDED.printMessage(
         "Public", activityId + "-R" + reviewNumber, getActivityName(activityId));
 
@@ -335,7 +337,9 @@ public class OperatorManagementSystem {
       options[2] = "5";
     }
 
-    int reviewNumber = getReviewNumber(activityId);
+    int reviewNumber = 1;
+    reviewNumber = getReviewNumber(activityId, reviewNumber);
+
     MessageCli.REVIEW_ADDED.printMessage(
         "Private", activityId + "-R" + reviewNumber, getActivityName(activityId));
 
@@ -364,7 +368,9 @@ public class OperatorManagementSystem {
       options[1] = "5";
     }
 
-    int reviewNumber = getReviewNumber(activityId);
+    int reviewNumber = 1;
+    reviewNumber = getReviewNumber(activityId, reviewNumber);
+
     MessageCli.REVIEW_ADDED.printMessage(
         "Expert", activityId + "-R" + reviewNumber, getActivityName(activityId));
 
@@ -379,8 +385,7 @@ public class OperatorManagementSystem {
   }
 
   // Checks the number of reviews
-  private int getReviewNumber(String activityId) {
-    int reviewNumber = 1;
+  private int getReviewNumber(String activityId, int reviewNumber) {
     for (PublicReview review : publicReviewList) {
       if (review.getActivityId().equals(activityId)) {
         reviewNumber++;
@@ -400,11 +405,39 @@ public class OperatorManagementSystem {
   }
 
   public void displayReviews(String activityId) {
+    if (getActivityName(activityId) == null) {
+      MessageCli.ACTIVITY_NOT_FOUND.printMessage(activityId);
+      return;
+    }
     int reviewNumber = 0;
+    reviewNumber = getReviewNumber(activityId, reviewNumber);
 
     // Print number of matching reviews
     if (reviewNumber == 0) {
       MessageCli.REVIEWS_FOUND.printMessage("are", "no", "s", getActivityName(activityId));
+    } else if (reviewNumber == 1) {
+      MessageCli.REVIEWS_FOUND.printMessage(
+          "is", reviewNumber + "", "", getActivityName(activityId));
+    } else {
+      MessageCli.REVIEWS_FOUND.printMessage(
+          "are", reviewNumber + "", "s", getActivityName(activityId));
+    }
+
+    for (PublicReview review : publicReviewList) {
+      if (review.getActivityId().equals(activityId)) {
+        System.out.println(review);
+        MessageCli.REVIEW_ENTRY_REVIEW_TEXT.printMessage(review.getReviewText());
+      }
+    }
+    for (PrivateReview review : privateReviewList) {
+      if (review.getActivityId().equals(activityId)) {
+        System.out.println(review);
+      }
+    }
+    for (ExpertReview review : expertReviewList) {
+      if (review.getActivityId().equals(activityId)) {
+        System.out.println(review);
+      }
     }
   }
 
