@@ -223,6 +223,21 @@ public class OperatorManagementSystem {
     // Prints message when searching for all activities
     if (trimAndLowerCaseKeyword.equals("*") && totalActivityCount == 0) {
       MessageCli.ACTIVITIES_FOUND.printMessage("are", "no", "ies", ".");
+      return;
+    } else if (trimAndLowerCaseKeyword.equals("*") && totalActivityCount == 1) {
+      MessageCli.ACTIVITIES_FOUND.printMessage(
+          "is", Integer.toString(totalActivityCount), "y", ":");
+      for (Activity activity : activityList) {
+        System.out.println(activity + getOperatorName(activity.getOperatorId()));
+      }
+      return;
+    } else if (trimAndLowerCaseKeyword.equals("*") && totalActivityCount > 1) {
+      MessageCli.ACTIVITIES_FOUND.printMessage(
+          "are", Integer.toString(totalActivityCount), "ies", ":");
+      for (Activity activity : activityList) {
+        System.out.println(activity + getOperatorName(activity.getOperatorId()));
+      }
+      return;
     }
   }
 
