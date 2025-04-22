@@ -1,10 +1,13 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
+
 public class ExpertReview extends Review {
   private String name;
   private String rating;
   private String recommendation;
   private String reviewId;
+  private ArrayList<String> images = new ArrayList<>();
 
   public ExpertReview(
       String name,
@@ -22,6 +25,18 @@ public class ExpertReview extends Review {
 
   public boolean isRecommended() {
     return !recommendation.equals("n");
+  }
+
+  public boolean isImagesEmpty() {
+    return images.isEmpty();
+  }
+
+  public void addImages(String image) {
+    images.add(image);
+  }
+
+  public ArrayList<String> getImages() {
+    return images;
   }
 
   @Override

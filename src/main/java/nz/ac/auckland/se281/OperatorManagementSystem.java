@@ -455,6 +455,17 @@ public class OperatorManagementSystem {
         if (review.isRecommended()) {
           MessageCli.REVIEW_ENTRY_RECOMMENDED.printMessage();
         }
+        // Checks if there are images
+        if (!review.isImagesEmpty()) {
+          StringBuilder imagesBuilder = new StringBuilder();
+          for (int images = 0; images < review.getImages().size(); images++) {
+            if (images > 0) {
+              imagesBuilder.append(",");
+            }
+            imagesBuilder.append(review.getImages().get(images).trim());
+          }
+          MessageCli.REVIEW_ENTRY_IMAGES.printMessage(imagesBuilder.toString());
+        }
       }
     }
   }
@@ -558,6 +569,27 @@ public class OperatorManagementSystem {
   }
 
   public void uploadReviewImage(String reviewId, String imageName) {
+    // Print message if reviewId belongs to a public or private
+    for (PublicReview review : publicReviewList) {
+      if (review.getReviewId().equals(reviewId)) {
+        MessageCli.REVIEW_IMAGE_NOT_ADDED_NOT_EXPERT.printMessage(reviewId);
+        return;
+      }
+    }
+    for (PrivateReview review : privateReviewList) {
+      if (review.getReviewId().equals(reviewId)) {
+        MessageCli.REVIEW_IMAGE_NOT_ADDED_NOT_EXPERT.printMessage(reviewId);
+        return;
+      }
+    }
+
+    for (ExpertReview review : expertReviewList) {
+      if (review.getReviewId().equals(reviewId)) {
+        MessageCli.REVIEW_IMAGE_ADDED.printMessage(imageName, reviewId);
+        review.addImages(imageName);
+        return;
+      }
+    }
     MessageCli.REVIEW_NOT_FOUND.printMessage(reviewId);
   }
 
