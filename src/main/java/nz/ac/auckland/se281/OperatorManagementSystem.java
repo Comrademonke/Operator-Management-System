@@ -239,6 +239,28 @@ public class OperatorManagementSystem {
       }
       return;
     }
+    // Initialise values;
+    int activitiesFound = 0;
+    ArrayList<Activity> matchingActivityList = new ArrayList<>();
+
+    // Adds the activity to a matching activity list if it is matching a keyword
+    for (Activity activity : activityList) {
+      if (activity.getActivityName().toLowerCase().contains(trimAndLowerCaseKeyword)
+          || activity.getActivityType().getName().toLowerCase().contains(trimAndLowerCaseKeyword)) {
+        activitiesFound++;
+        matchingActivityList.add(activity);
+      }
+    }
+
+    // Prints the number of matching activities and the list of matching activities
+    if (activitiesFound == 0) {
+      MessageCli.ACTIVITIES_FOUND.printMessage("are", "no", "ies", ".");
+    } else if (activitiesFound == 1) {
+      MessageCli.ACTIVITIES_FOUND.printMessage("is", Integer.toString(activitiesFound), "y", ":");
+    }
+    for (Activity activity : matchingActivityList) {
+      System.out.println(activity + getOperatorName(activity.getOperatorId()));
+    }
   }
 
   public void addPublicReview(String activityId, String[] options) {
