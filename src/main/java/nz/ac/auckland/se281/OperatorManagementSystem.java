@@ -1,6 +1,7 @@
 package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
+import nz.ac.auckland.se281.Types.ActivityType;
 
 public class OperatorManagementSystem {
 
@@ -211,10 +212,21 @@ public class OperatorManagementSystem {
         activityTypeEnum.getName(),
         getOperatorName(operatorId));
 
+    addOperatorActivity(operatorId, activityTypeEnum);
+
     activityList.add(
         new Activity(
             activityName, activityTypeEnum, operatorId, activityCountFormat + activityCount));
     totalActivityCount++;
+  }
+
+  // adds the activity to the operator
+  private void addOperatorActivity(String operatorId, ActivityType activity) {
+    for (Operator operator : operatorList) {
+      if (operator.getId().contains(operatorId)) {
+        operator.addActivity(activity);
+      }
+    }
   }
 
   public void searchActivities(String keyword) {
