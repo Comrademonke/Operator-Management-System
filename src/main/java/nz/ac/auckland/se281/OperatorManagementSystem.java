@@ -558,7 +558,7 @@ public class OperatorManagementSystem {
   }
 
   public void uploadReviewImage(String reviewId, String imageName) {
-    // TODO implement
+    MessageCli.REVIEW_NOT_FOUND.printMessage(reviewId);
   }
 
   public void displayTopActivities() {
