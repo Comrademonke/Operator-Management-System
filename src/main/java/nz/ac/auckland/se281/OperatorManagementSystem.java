@@ -611,13 +611,13 @@ public class OperatorManagementSystem {
       int totalRating = 0;
       int reviewCount = 0;
       for (PublicReview review : publicReviewList) {
-        if (review.getReviewId().equals(activity.getActivityId())) {
+        if (review.getActivityId().equals(activity.getActivityId())) {
           totalRating += review.getRating();
           reviewCount++;
         }
       }
       for (ExpertReview review : expertReviewList) {
-        if (review.getReviewId().equals(activity.getActivityId())) {
+        if (review.getActivityId().equals(activity.getActivityId())) {
           totalRating += review.getRating();
           reviewCount++;
         }
@@ -636,7 +636,24 @@ public class OperatorManagementSystem {
       // Prints message if no reviews exist for location
       if (ratings.isEmpty()) {
         MessageCli.NO_REVIEWED_ACTIVITIES.printMessage(location.getFullName());
+        continue;
       }
+
+      // Finds the highest rating
+      ActivityRating topRating = ratings.get(0);
+      for (ActivityRating rating : ratings) {
+        int currentAverage = topRating.getTotalRating() / topRating.getReviewCount();
+        int newAverage = rating.getTotalRating() / rating.getReviewCount();
+        if (newAverage > currentAverage) {
+          topRating = rating;
+        }
+      }
+
+      int average = topRating.getTotalRating() / topRating.getReviewCount();
+      MessageCli.TOP_ACTIVITY.printMessage(
+          location.getFullName(),
+          topRating.getActivity().getActivityName(),
+          Integer.toString(average));
     }
   }
 
