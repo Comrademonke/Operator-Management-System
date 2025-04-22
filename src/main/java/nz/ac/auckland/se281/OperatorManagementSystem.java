@@ -246,7 +246,9 @@ public class OperatorManagementSystem {
     // Adds the activity to a matching activity list if it is matching a keyword
     for (Activity activity : activityList) {
       if (activity.getActivityName().toLowerCase().contains(trimAndLowerCaseKeyword)
-          || activity.getActivityType().getName().toLowerCase().contains(trimAndLowerCaseKeyword)) {
+          || activity.getActivityType().getName().toLowerCase().contains(trimAndLowerCaseKeyword)
+          || getLocation(activity.getOperatorId()).toLowerCase().contains(trimAndLowerCaseKeyword)
+          || activity.getOperatorId().toLowerCase().contains(trimAndLowerCaseKeyword)) {
         activitiesFound++;
         matchingActivityList.add(activity);
       }
@@ -257,10 +259,22 @@ public class OperatorManagementSystem {
       MessageCli.ACTIVITIES_FOUND.printMessage("are", "no", "ies", ".");
     } else if (activitiesFound == 1) {
       MessageCli.ACTIVITIES_FOUND.printMessage("is", Integer.toString(activitiesFound), "y", ":");
+    } else {
+      MessageCli.ACTIVITIES_FOUND.printMessage(
+          "are", Integer.toString(activitiesFound), "ies", ":");
     }
     for (Activity activity : matchingActivityList) {
       System.out.println(activity + getOperatorName(activity.getOperatorId()));
     }
+  }
+
+  private String getLocation(String operatorId) {
+    for (Operator operator : operatorList) {
+      if (operator.getId().equals(operatorId)) {
+        return operator.getLocation().getFullName();
+      }
+    }
+    return null;
   }
 
   public void addPublicReview(String activityId, String[] options) {
