@@ -224,8 +224,8 @@ public class OperatorManagementSystem {
     totalActivityCount++;
   }
 
-  // adds the activity to the operator
   private void addOperatorActivity(String operatorId, ActivityType activity) {
+    // adds the activity to the operator
     for (Operator operator : operatorList) {
       if (operator.getId().contains(operatorId)) {
         operator.addActivity(activity);
@@ -384,8 +384,8 @@ public class OperatorManagementSystem {
             activityId + "-R" + reviewNumber));
   }
 
-  // Checks the number of reviews
   private int getReviewNumber(String activityId, int reviewNumber) {
+    // Checks the number of reviews and returns the number of matching reviews
     for (PublicReview review : publicReviewList) {
       if (review.getActivityId().equals(activityId)) {
         reviewNumber++;
@@ -510,7 +510,26 @@ public class OperatorManagementSystem {
   }
 
   public void resolveReview(String reviewId, String response) {
-    // TODO implement
+    // Initialize values
+    boolean reviewExists = false;
+    boolean isPrivate = false;
+
+    // Check all review lists
+    for (PrivateReview review : privateReviewList) {
+      if (review.getReviewId().equals(reviewId)) {
+        reviewExists = true;
+        isPrivate = true;
+        break;
+      }
+    }
+
+    if (!reviewExists) {
+      MessageCli.REVIEW_NOT_FOUND.printMessage(reviewId);
+      return;
+    } else if (!isPrivate) {
+      MessageCli.REVIEW_NOT_RESOLVED.printMessage(reviewId);
+      return;
+    }
   }
 
   public void uploadReviewImage(String reviewId, String imageName) {
