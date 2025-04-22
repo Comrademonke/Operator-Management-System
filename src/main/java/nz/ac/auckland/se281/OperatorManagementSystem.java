@@ -443,6 +443,10 @@ public class OperatorManagementSystem {
         // Checks for any follow ups and any resolved issues
         if (review.getFollowUp() && !review.isResolved()) {
           MessageCli.REVIEW_ENTRY_RESOLVED.printMessage("-");
+        } else if (review.getFollowUp() && review.isResolved()) {
+          MessageCli.REVIEW_ENTRY_RESOLVED.printMessage(review.getResolvedMessage());
+        } else {
+          MessageCli.REVIEW_ENTRY_FOLLOW_UP.printMessage(review.getEmail());
         }
       }
     }
