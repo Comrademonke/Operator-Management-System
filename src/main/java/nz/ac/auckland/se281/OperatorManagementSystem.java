@@ -5,10 +5,14 @@ import nz.ac.auckland.se281.Types.ActivityType;
 
 public class OperatorManagementSystem {
 
+  // Initialize values;
   private int totalOperatorCount = 0;
   private int totalActivityCount = 0;
   private ArrayList<Operator> operatorList = new ArrayList<>();
   private ArrayList<Activity> activityList = new ArrayList<>();
+  private ArrayList<PublicReview> publicReviewList = new ArrayList<>();
+  private ArrayList<PrivateReview> privateReviewList = new ArrayList<>();
+  private ArrayList<ExpertReview> expertReviewList = new ArrayList<>();
 
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {}
@@ -296,9 +300,19 @@ public class OperatorManagementSystem {
       return;
     }
 
-    int reviewNumber = 1;
+    int reviewNumber = getReviewNumber(activityId);
+
     MessageCli.REVIEW_ADDED.printMessage(
         "Public", activityId + "-R" + reviewNumber, getActivityName(activityId));
+
+    publicReviewList.add(
+        new PublicReview(
+            options[0],
+            options[1],
+            options[2],
+            options[3],
+            activityId,
+            activityId + "-R" + reviewNumber));
   }
 
   public void addPrivateReview(String activityId, String[] options) {
@@ -308,9 +322,20 @@ public class OperatorManagementSystem {
       return;
     }
 
-    int reviewNumber = 1;
+    int reviewNumber = getReviewNumber(activityId);
+
     MessageCli.REVIEW_ADDED.printMessage(
         "Private", activityId + "-R" + reviewNumber, getActivityName(activityId));
+
+    privateReviewList.add(
+        new PrivateReview(
+            options[0],
+            options[1],
+            options[2],
+            options[3],
+            options[4],
+            activityId,
+            activityId + "-R" + reviewNumber));
   }
 
   public void addExpertReview(String activityId, String[] options) {
@@ -320,9 +345,40 @@ public class OperatorManagementSystem {
       return;
     }
 
-    int reviewNumber = 1;
+    int reviewNumber = getReviewNumber(activityId);
+
     MessageCli.REVIEW_ADDED.printMessage(
         "Expert", activityId + "-R" + reviewNumber, getActivityName(activityId));
+
+    expertReviewList.add(
+        new ExpertReview(
+            options[0],
+            options[1],
+            options[2],
+            options[3],
+            activityId,
+            activityId + "-R" + reviewNumber));
+  }
+
+  // Checks the number of reviews
+  private int getReviewNumber(String activityId) {
+    int reviewNumber = 1;
+    for (PublicReview review : publicReviewList) {
+      if (review.getActivityId().equals(activityId)) {
+        reviewNumber++;
+      }
+    }
+    for (PrivateReview review : privateReviewList) {
+      if (review.getActivityId().equals(activityId)) {
+        reviewNumber++;
+      }
+    }
+    for (ExpertReview review : expertReviewList) {
+      if (review.getActivityId().equals(activityId)) {
+        reviewNumber++;
+      }
+    }
+    return reviewNumber;
   }
 
   public void displayReviews(String activityId) {
