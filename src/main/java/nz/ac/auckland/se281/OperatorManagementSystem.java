@@ -444,6 +444,12 @@ public class OperatorManagementSystem {
     for (ExpertReview review : expertReviewList) {
       if (review.getActivityId().equals(activityId)) {
         System.out.println(review);
+        MessageCli.REVIEW_ENTRY_REVIEW_TEXT.printMessage(review.getReviewText());
+
+        // Checks if recommended by expert
+        if (review.isRecommended()) {
+          MessageCli.REVIEW_ENTRY_RECOMMENDED.printMessage();
+        }
       }
     }
   }
