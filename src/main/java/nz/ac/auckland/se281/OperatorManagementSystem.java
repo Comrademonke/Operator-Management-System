@@ -290,7 +290,11 @@ public class OperatorManagementSystem {
   }
 
   public void addPublicReview(String activityId, String[] options) {
-    // TODO implement
+    // Checks for invalid activityId
+    if (getActivityName(activityId) == null) {
+      MessageCli.REVIEW_NOT_ADDED_INVALID_ACTIVITY_ID.printMessage(activityId);
+      return;
+    }
   }
 
   public void addPrivateReview(String activityId, String[] options) {
