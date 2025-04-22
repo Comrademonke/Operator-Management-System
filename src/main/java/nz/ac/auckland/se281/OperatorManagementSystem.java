@@ -1,6 +1,7 @@
 package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import nz.ac.auckland.se281.Types.ActivityType;
 
 public class OperatorManagementSystem {
@@ -598,9 +599,45 @@ public class OperatorManagementSystem {
   }
 
   public void displayTopActivities() {
-    // Print reviewed activities
+    HashMap<Types.Location, ArrayList<ActivityRating>> locationRatings = new HashMap<>();
+
+    // Initialise locations
     for (Types.Location location : Types.Location.values()) {
-      MessageCli.NO_REVIEWED_ACTIVITIES.printMessage(location.getFullName());
+      locationRatings.put(location, new ArrayList<>());
     }
+
+    // Collect all activities and their ratings
+    for (Activity activity : activityList) {
+      int totalRating = 0;
+      int reviewCount = 0;
+      for (PublicReview review : publicReviewList) {
+        if (review.getReviewId().equals(activity.getActivityId())) {
+          totalRating += review.getRating();
+          reviewCount++;
+        }
+      }
+      for (ExpertReview review : expertReviewList) {
+        if (review.getReviewId().equals(activity.getActivityId())) {
+          totalRating += review.getRating();
+          reviewCount++;
+        }
+      }
+
+      if (reviewCount > 0) {
+        Types.Location location = getLocationType(activity.getOperatorId());
+        if (location != null) {
+          locationRatings.get(location).add(new ActivityRating(activity, totalRating, reviewCount));
+        }
+      }
+    }
+  }
+
+  private Types.Location getLocationType(String operatorId) {
+    for (Operator operator : operatorList) {
+      if (operator.getId().equals(operatorId)) {
+        return operator.getLocation();
+      }
+    }
+    return null;
   }
 }
