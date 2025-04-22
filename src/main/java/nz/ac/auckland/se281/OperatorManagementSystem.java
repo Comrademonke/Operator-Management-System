@@ -630,6 +630,14 @@ public class OperatorManagementSystem {
         }
       }
     }
+
+    for (Types.Location location : locationRatings.keySet()) {
+      ArrayList<ActivityRating> ratings = locationRatings.get(location);
+      // Prints message if no reviews exist for location
+      if (ratings.isEmpty()) {
+        MessageCli.NO_REVIEWED_ACTIVITIES.printMessage(location.getFullName());
+      }
+    }
   }
 
   private Types.Location getLocationType(String operatorId) {

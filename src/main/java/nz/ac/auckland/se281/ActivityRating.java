@@ -1,10 +1,9 @@
 package nz.ac.auckland.se281;
 
 public class ActivityRating {
-  Activity activity;
-  int totalRating = 0;
-  int reviewCount = 0;
-  int averageRating = 0;
+  private Activity activity;
+  private int totalRating = 0;
+  private int reviewCount = 0;
 
   public ActivityRating(Activity activity, int totalRating, int reviewCount) {
     this.activity = activity;
@@ -18,5 +17,9 @@ public class ActivityRating {
 
   public int getReviewCount() {
     return reviewCount;
+  }
+
+  public Activity getActivity() {
+    return activity;
   }
 }
