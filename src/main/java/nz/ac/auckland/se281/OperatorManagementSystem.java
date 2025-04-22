@@ -302,7 +302,21 @@ public class OperatorManagementSystem {
   }
 
   public void displayReviews(String activityId) {
-    // TODO implement
+    int reviewNumber = 0;
+
+    // Print number of matching reviews
+    if (reviewNumber == 0) {
+      MessageCli.REVIEWS_FOUND.printMessage("are", "no", "s", getActivityName(activityId));
+    }
+  }
+
+  private String getActivityName(String activityId) {
+    for (Activity activity : activityList) {
+      if (activity.getActivityId().equals(activityId)) {
+        return activity.getActivityName();
+      }
+    }
+    return null;
   }
 
   public void endorseReview(String reviewId) {
