@@ -295,6 +295,10 @@ public class OperatorManagementSystem {
       MessageCli.REVIEW_NOT_ADDED_INVALID_ACTIVITY_ID.printMessage(activityId);
       return;
     }
+
+    int reviewNumber = 1;
+    MessageCli.REVIEW_ADDED.printMessage(
+        "Public", activityId + "-R" + reviewNumber, getActivityName(activityId));
   }
 
   public void addPrivateReview(String activityId, String[] options) {
