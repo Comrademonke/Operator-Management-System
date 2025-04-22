@@ -598,6 +598,9 @@ public class OperatorManagementSystem {
   }
 
   public void displayTopActivities() {
-    // TODO implement
+    // Print reviewed activities
+    for (Types.Location location : Types.Location.values()) {
+      MessageCli.NO_REVIEWED_ACTIVITIES.printMessage(location.getFullName());
+    }
   }
 }
