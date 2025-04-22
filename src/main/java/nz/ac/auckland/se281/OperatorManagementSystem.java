@@ -300,8 +300,14 @@ public class OperatorManagementSystem {
       return;
     }
 
-    int reviewNumber = getReviewNumber(activityId);
+    // Adjusts the rating to fit between 1 and 5
+    if (Integer.valueOf(options[2]) < 1) {
+      options[2] = "1";
+    } else if (Integer.valueOf(options[2]) > 5) {
+      options[2] = "5";
+    }
 
+    int reviewNumber = getReviewNumber(activityId);
     MessageCli.REVIEW_ADDED.printMessage(
         "Public", activityId + "-R" + reviewNumber, getActivityName(activityId));
 
@@ -322,8 +328,14 @@ public class OperatorManagementSystem {
       return;
     }
 
-    int reviewNumber = getReviewNumber(activityId);
+    // Adjusts the rating to fit between 1 and 5
+    if (Integer.valueOf(options[2]) < 1) {
+      options[2] = "1";
+    } else if (Integer.valueOf(options[2]) > 5) {
+      options[2] = "5";
+    }
 
+    int reviewNumber = getReviewNumber(activityId);
     MessageCli.REVIEW_ADDED.printMessage(
         "Private", activityId + "-R" + reviewNumber, getActivityName(activityId));
 
@@ -345,8 +357,14 @@ public class OperatorManagementSystem {
       return;
     }
 
-    int reviewNumber = getReviewNumber(activityId);
+    // Adjusts the rating to fit between 1 and 5
+    if (Integer.valueOf(options[1]) < 1) {
+      options[1] = "1";
+    } else if (Integer.valueOf(options[1]) > 5) {
+      options[1] = "5";
+    }
 
+    int reviewNumber = getReviewNumber(activityId);
     MessageCli.REVIEW_ADDED.printMessage(
         "Expert", activityId + "-R" + reviewNumber, getActivityName(activityId));
 
