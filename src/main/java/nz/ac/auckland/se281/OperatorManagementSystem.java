@@ -524,11 +524,36 @@ public class OperatorManagementSystem {
     }
 
     if (!reviewExists) {
+      // Checks if review exists, but is public or expert
+      for (PublicReview review : publicReviewList) {
+        if (review.getReviewId().equals(reviewId)) {
+          reviewExists = true;
+          break;
+        }
+      }
+      for (ExpertReview review : expertReviewList) {
+        if (review.getReviewId().equals(reviewId)) {
+          reviewExists = true;
+          break;
+        }
+      }
+    }
+
+    if (!reviewExists) {
       MessageCli.REVIEW_NOT_FOUND.printMessage(reviewId);
       return;
     } else if (!isPrivate) {
       MessageCli.REVIEW_NOT_RESOLVED.printMessage(reviewId);
       return;
+    }
+
+    // Resolve the issue
+    for (PrivateReview review : privateReviewList) {
+      if (review.getReviewId().equals(reviewId)) {
+        MessageCli.REVIEW_RESOLVED.printMessage(reviewId);
+        review.resolvedReview(response);
+        return;
+      }
     }
   }
 

@@ -6,6 +6,7 @@ public class PrivateReview extends Review {
   private String email;
   private String followUp;
   private String reviewId;
+  private String resolvedMessage;
   private boolean resolved;
 
   public PrivateReview(
@@ -40,6 +41,16 @@ public class PrivateReview extends Review {
 
   public boolean isResolved() {
     return resolved;
+  }
+
+  public void resolvedReview(String resolvedMessage) {
+    followUp = "n";
+    this.resolved = true;
+    this.resolvedMessage = resolvedMessage;
+  }
+
+  public String getResolvedMessage() {
+    return resolvedMessage;
   }
 
   @Override
