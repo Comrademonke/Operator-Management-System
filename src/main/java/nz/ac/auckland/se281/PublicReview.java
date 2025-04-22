@@ -4,6 +4,7 @@ public class PublicReview extends Review {
   private String name;
   private String rating;
   private String reviewId;
+  private boolean endorsedReview = false;
 
   public PublicReview(
       String name,
@@ -16,6 +17,18 @@ public class PublicReview extends Review {
     this.name = name;
     this.rating = rating;
     this.reviewId = reviewId;
+
+    if (!anonymous.equals("n")) {
+      this.name = "Anonymous";
+    }
+  }
+
+  public boolean isEndorsed() {
+    return endorsedReview;
+  }
+
+  public void reviewEndorsed() {
+    endorsedReview = true;
   }
 
   @Override

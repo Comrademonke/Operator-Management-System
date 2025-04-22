@@ -428,6 +428,11 @@ public class OperatorManagementSystem {
       if (review.getActivityId().equals(activityId)) {
         System.out.println(review);
         MessageCli.REVIEW_ENTRY_REVIEW_TEXT.printMessage(review.getReviewText());
+
+        // Checks if the review is endorsed
+        if (review.isEndorsed()) {
+          MessageCli.REVIEW_ENTRY_ENDORSED.printMessage();
+        }
       }
     }
     for (PrivateReview review : privateReviewList) {
@@ -464,7 +469,44 @@ public class OperatorManagementSystem {
   }
 
   public void endorseReview(String reviewId) {
-    // TODO implement
+    int endorsementType = 0;
+    // Checks if reviewId is valid
+    for (PublicReview review : publicReviewList) {
+      if (review.getReviewId().equals(reviewId)) {
+        endorsementType = 1;
+        break;
+      }
+    }
+    for (PrivateReview review : privateReviewList) {
+      if (review.getReviewId().equals(reviewId)) {
+        endorsementType = 2;
+        break;
+      }
+    }
+    for (ExpertReview review : expertReviewList) {
+      if (review.getReviewId().equals(reviewId)) {
+        endorsementType = 2;
+        break;
+      }
+    }
+
+    // Prints message based off the endorsement type
+    if (endorsementType == 0) {
+      MessageCli.REVIEW_NOT_FOUND.printMessage(reviewId);
+      return;
+    } else if (endorsementType == 2) {
+      MessageCli.REVIEW_NOT_ENDORSED.printMessage(reviewId);
+      return;
+    } else if (endorsementType == 1) {
+      MessageCli.REVIEW_ENDORSED.printMessage(reviewId);
+    }
+
+    // Endorses the review
+    for (PublicReview review : publicReviewList) {
+      if (review.getReviewId().equals(reviewId)) {
+        review.reviewEndorsed();
+      }
+    }
   }
 
   public void resolveReview(String reviewId, String response) {
