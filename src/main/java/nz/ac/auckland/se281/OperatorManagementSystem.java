@@ -423,6 +423,7 @@ public class OperatorManagementSystem {
           "are", reviewNumber + "", "s", getActivityName(activityId));
     }
 
+    // Prints reviews
     for (PublicReview review : publicReviewList) {
       if (review.getActivityId().equals(activityId)) {
         System.out.println(review);
@@ -432,6 +433,12 @@ public class OperatorManagementSystem {
     for (PrivateReview review : privateReviewList) {
       if (review.getActivityId().equals(activityId)) {
         System.out.println(review);
+        MessageCli.REVIEW_ENTRY_REVIEW_TEXT.printMessage(review.getReviewText());
+
+        // Checks for any follow ups and any resolved issues
+        if (review.getFollowUp() && !review.isResolved()) {
+          MessageCli.REVIEW_ENTRY_RESOLVED.printMessage("-");
+        }
       }
     }
     for (ExpertReview review : expertReviewList) {
